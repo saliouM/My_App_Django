@@ -1,10 +1,12 @@
+
+
 ## Projet Django (blog)
 
-## Etape 1 : Configuration
+### Etape 1 : Configuration
 
-##### source :  open classroom ####
+#### Source: Open Classroom
 
-'''
+```bash
 ~/→ mkdir fotoblog && cd fotoblog
 ~/fotoblog → python -m venv ENV
 ~/fotoblog → source ENV/bin/activate
@@ -14,9 +16,11 @@
 (ENV) ~/fotoblog → django-admin startproject fotoblog .
 (ENV) ~/fotoblog → python manage.py startapp authentication
 (ENV) ~/fotoblog → python manage.py startapp blog
-'''
-# fotoblog/settings.py
-'''
+```
+
+#### fotoblog/settings.py
+
+```python
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -29,36 +33,36 @@ INSTALLED_APPS = [
 ]
 
 LANGUAGE_CODE = 'fr-fr'
-'''
+```
 
-'''
+```bash
 (ENV) ~/fotoblog → git init
 (ENV) ~/fotoblog → echo ENV > .gitignore
 (ENV) ~/fotoblog → echo __pycache__ >> .gitignore
 (ENV) ~/fotoblog → echo db.sqlite3 >> .gitignore
-(ENV) ~/fotoblog → # Vous pouvez ajouter d'autres fichiers et répertoires dans le .gitignore ici
-(ENV) ~/fotoblog  → git add .
-(ENV) ~/fotoblog  → git status
-(ENV) ~/fotoblog  → git commit -m “initial commit”
+(ENV) ~/fotoblog → git add .
+(ENV) ~/fotoblog → git status
+(ENV) ~/fotoblog → git commit -m “initial commit”
+```
 
-'''
+### Configuration selon le système d'exploitation
 
-### ---Linux  ubuntu : ---
+#### Linux (Ubuntu)
 
-''' 
+```bash
 python -V
-pip instal virtuelenv
-virtualenv my_projet
+pip install virtualenv
+virtualenv my_project
 cd ..
-source ENV/bin/activate    | deactivate
+source ENV/bin/activate | deactivate
 
 pip install django==4.0
 pip freeze > requirements.txt
-'''
+```
 
-### ----Windows ----
+#### Windows
 
-'''
+```bash
 ENV\Scripts\activate
 pip install django
 django-admin startproject nom_de_votre_projet
@@ -67,17 +71,13 @@ cd nom_de_votre_projet
 python manage.py runserver   (http://127.0.0.1:8000/)
 pip freeze > requirements.txt
 type requirements.txt (affiche le texte)
+```
 
-(ENV) ~/fotoblog → django-admin startproject fotoblog .
-(ENV) ~/fotoblog → python manage.py startapp authentication
-(ENV) ~/fotoblog → python manage.py startapp blog
+### Ajout de paramètres
 
-'''
+#### fotoblog/settings.py
 
-## -----Ajoutt de params----
-
-# fotoblog/settings.py
-'''
+```python
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -88,11 +88,13 @@ INSTALLED_APPS = [
     'authentication',
     'blog',
 ]
-LANGUAGE_CODE = 'fr-fr'
-'''
-## ----Configuration du compte github----
 
-'''
+LANGUAGE_CODE = 'fr-fr'
+```
+
+### Configuration du compte GitHub
+
+```bash
 git config --global user.name "VotreNom"
 git config --global user.email "votre@email.com"
 
@@ -111,15 +113,13 @@ ssh -T git@github.com
 (ENV) ~/fotoblog → echo ENV > .gitignore
 (ENV) ~/fotoblog → echo __pycache__ >> .gitignore
 (ENV) ~/fotoblog → echo db.sqlite3 >> .gitignore
-(ENV) ~/fotoblog → # Vous pouvez ajouter d'autres fichiers et répertoires dans le .gitignore ici
-(ENV) ~/fotoblog  → git add .
-(ENV) ~/fotoblog  → git status
-(ENV) ~/fotoblog  → git commit -m “initial commit”
+(ENV) ~/fotoblog → git add .
+(ENV) ~/fotoblog → git status
+(ENV) ~/fotoblog → git commit -m “initial commit”
 
 git remote add origin https://github.com/nom_utilisateur/nom_du_depot.git
 
-
-## ---------or create a new repository on the command line------------------
+## ou créer un nouveau dépôt depuis la ligne de commande
 
 echo "# My_App_Django" >> README.md
 git init
@@ -129,20 +129,24 @@ git branch -M main
 git remote add origin https://github.com/saliouM/My_App_Django.git
 git push -u origin main
 
-#-----------or push an existing repository from the command line----------------------
+## ou pousser un dépôt existant depuis la ligne de commande
 
 git remote add origin https://github.com/saliouM/My_App_Django.git
 git branch -M main
 git push -u origin main
+```
 
-'''
+Voici votre texte organisé avec des titres, des codes et des délimiteurs pour votre README sur GitHub :
 
-## Etape 2 : Creation d'un model user
+---
 
-# ----1 : Créez le modèle User  ----
+## Étape 2 : Création d'un modèle utilisateur
 
-# authentication/models.py
-'''
+### 1. Création du modèle User
+
+#### authentication/models.py
+
+```python
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -157,59 +161,49 @@ class User(AbstractUser):
     )
     profile_photo = models.ImageField(verbose_name='Photo de profil')
     role = models.CharField(max_length=30, choices=ROLE_CHOICES, verbose_name='Rôle')
-'''
+```
 
-## ---2 : Configurez Django pour utiliser un modèle User personnalisé---
+### 2. Configuration de Django pour utiliser un modèle User personnalisé
 
-# fotoblog/settings.py
-'''
+#### fotoblog/settings.py
+
+```python
 AUTH_USER_MODEL = 'authentication.User'
-'''
+```
 
-## ----3 : Générez et exécutez les migrations initiales------
+### 3. Génération et exécution des migrations initiales
 
-''' 
-(ENV) ~/fotoblog (master)
-
+```bash
 (ENV) ~/fotoblog (master) → pip install Pillow
 (ENV) ~/fotoblog (master) → pip freeze > requirements.txt
 
-Génération des migrations :
+# Génération des migrations
+(ENV) ~/fotoblog (master) → python manage.py makemigrations
 
-(ENV) ~/fotoblog (master)
-→ python manage.py makemigrations
+# Exécution des migrations
+(ENV) ~/fotoblog (master) → python manage.py migrate
+```
 
-Exécution des migrations :
+## Étape 3: Programmation de la vue de connexion des utilisateurs
 
-(ENV) ~/fotoblog (master)
-→ python manage.py migrate
-'''
+### 1. Création du formulaire de connexion
 
-## Etape 3: Programmez la vue pour que les utilisateurs se connectent
+#### authentication/forms.py
 
-# -----1 : Créez le LoginForm(formulaire de connexion)----
-'''
-(ENV) ~/fotoblog (master)
-→ touch authentication/forms.py
-type nul > authentication/forms.py (cmd)
-'''
-
-# --Dans ce fichier, créez le  LoginForm.--
-
-# authentication/forms.py
-'''
+```python
 from django import forms
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=63, label='Nom d’utilisateur')
     password = forms.CharField(max_length=63, widget=forms.PasswordInput, label='Mot de passe')
-'''
+```
 
-## ---2 : Créez la vue de la page de connexion---
+### 2. Création de la vue de la page de connexion
 
-# authentication/views.py
-'''
-from django.contrib.auth import login, authenticate # import des fonctions login et authenticate
+#### authentication/views.py
+
+```python
+from django.contrib.auth import login, authenticate
 from django.shortcuts import render
 from . import forms
 
@@ -230,21 +224,45 @@ def login_page(request):
                 message = 'Identifiants invalides.'
     return render(
         request, 'authentication/login.html', context={'form': form, 'message': message})
-'''
+```
 
-'''
-(ENV) ~/fotoblog (master)
-→ mkdir -p  authentication/templates/authentication
+### 3. Configuration des templates et des URLs
 
-(ENV) ~/fotoblog (master)
-→ mkdir -p blog/templates/blog/
+#### Création des répertoires de templates
 
-(ENV) ~/fotoblog (master)
-→ mkdir templates
-'''
+```bash
+(ENV) ~/fotoblog (master) → mkdir -p  authentication/templates/authentication
+(ENV) ~/fotoblog (master) → mkdir -p blog/templates/blog/
+(ENV) ~/fotoblog (master) → mkdir templates
+```
 
-# templates/base.html
-'''
+#### Configuration des templates dans fotoblog/settings.py
+
+```python
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            BASE_DIR.joinpath('templates'), # <--- ajoutez cette ligne
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+```
+
+#### Contenu des templates
+
+##### templates/base.html
+
+```html
 <html>
     <head>
         <title>FotoBlog</title>
@@ -254,10 +272,11 @@ def login_page(request):
         {% block content %}{% endblock content %}
     </body>
 </html>
-'''
+```
 
-# authentication/templates/authentication/login.html
-''' 
+##### authentication/templates/authentication/login.html
+
+```html
 {% extends 'base.html' %}
 {% block content %}
     <p>{{ message }}</p>
@@ -267,33 +286,11 @@ def login_page(request):
         <button type="submit" >Se connecter</button>
     </form>
 {% endblock content %}
-'''
+```
 
-# fotoblog/settings.py
+#### Configuration des URLs dans fotoblog/urls.py
 
-'''
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            BASE_DIR.joinpath('templates'), # <--- ajoutez cette ligne
-            ],
-            'APP_DIRS': True,
-            'OPTIONS': {
-                'context_processors': [
-                    'django.template.context_processors.debug',
-                    'django.template.context_processors.request',
-                    'django.contrib.auth.context_processors.auth',
-                    'django.contrib.messages.context_processors.messages',
-                ],
-            },
-    },
-]
-'''
-
- #---4 : Ajoutez l’URL à urlpatterns----
-
-'''
+```python
 from django.contrib import admin
 from django.urls import path
 import authentication.views
@@ -302,190 +299,166 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', authentication.views.login_page, name='login'),
 ]
-'''
+```
 
-# ---5 : Affichez la page de connexion---
+### 4. Affichage de la page de connexion
 
-'''
+```bash
 python manage.py runserver
 http://localhost:8000
+```
 
-'''
+## Étape 4: Testez la fonctionnalité de connexion et ajoutez la déconnexion
 
-## Etape 4 Testez la fonctionnalité de connexion et ajoutez la déconnexion
+### 1. Création d'un utilisateur
 
-# ---1 : Créez un utilisateur--
-
-''' 
+```python
 from authentication.models import User
 User.objects.create_user(username='toto', password='S3cret!', role='CREATOR')
-'''
+```
 
+### 2. Création d'une vue de déconnexion
 
+#### authentication/views.py
 
-
-## ---3 : Créez une vue de déconnexion---
-# authentication/views.py
-''' 
-from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import redirect, render
-from . import forms
+```python
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 
 def logout_user(request):
-    
     logout(request)
     return redirect('login')
-    
-def login_page(request):
-'''
+```
 
-## ---4 : Ajouter la vue de déconnexion aux modèles d’URL---
-# authentication/urls.py
-#urlpatterns = [
+Voici votre texte organisé avec des titres, des codes et des délimiteurs pour votre README sur GitHub :
+
+---
+
+## 4. Ajouter la vue de déconnexion aux modèles d’URL
+
+#### authentication/urls.py
+
+```python
+# urlpatterns = [
 #    path('logout/', authentication.views.logout_user, name='logout'),
 #]
+```
 
+## 5. Ajoutez le gabarit de déconnexion
 
-## ----5: Ajoutez le gabarit de déconnexion---
-# templates/base.html
-'''
+#### templates/base.html
+
+```html
 <html>
-        <head>
-            <title>FotoBlog</title>
-        </head>
-        <body>
-            <h1>FotoBlog</h1>
-            {% block content %}{% endblock content %}
-            {% if user.is_authenticated %}
-                <p>Vous êtes connecté en tant que {{ request.user }}. <a href="{% url 'logout' %}">Se déconnecter</a></p>
-            {% endif %}
-        </body>
+    <head>
+        <title>FotoBlog</title>
+    </head>
+    <body>
+        <h1>FotoBlog</h1>
+        {% block content %}{% endblock content %}
+        {% if user.is_authenticated %}
+            <p>Vous êtes connecté en tant que {{ request.user }}. <a href="{% url 'logout' %}">Se déconnecter</a></p>
+        {% endif %}
+    </body>
 </html>
+```
 
-'''
+## 6. Restreignez l’accès à une partie du site aux utilisateurs connectés uniquement
 
+### 1. Ajoutez la vue
 
-## ---6 : Restreignez l’accès à une partie du site aux utilisateurs connectés uniquement--
+#### blog/views.py
 
-# 1 : Ajoutez la vue
-# blog/views.py
-'''
+```python
 def home(request):
     return render(request, 'blog/home.html')
-'''
-## ---2 : Ajoutez un gabarit---
-# blog/templates/blog/home.html
-'''
+```
+
+### 2. Ajoutez un gabarit
+
+#### blog/templates/blog/home.html
+
+```html
 {% extends 'base.html' %}
 {% block content %}
     <p>Vous êtes connecté !</p>
 {% endblock content %}
-'''
+```
 
-# ---3 : Ajoutez le modèle d’URL---
-# urls.py
-'''
+### 3. Ajoutez le modèle d’URL
+
+#### urls.py
+
+```python
 import blog.views
 
 urlpatterns = [
     ...
     path('home/', blog.views.home, name='home'),
 ]
+```
 
-'''
+### 4. Configurez une redirection après connexion
 
-# ---4 : Configurez une redirection après connexion---
+#### views.py
 
-# views.py
+```python
 #login 
-
-'''
 def login_page(request):
-    form = forms.LoginForm()
-    message = ''
-    if request.method == 'POST':
-        form = forms.LoginForm(request.POST)
-        if form.is_valid():
-            user = authenticate(
-                username=form.cleaned_data['username'],
-                password=form.cleaned_data['password'],
-            )
-            if user is not None:
-                login(request, user)
-                return redirect('home')
-                #message = f'Bonjour, {user.username}! Vous êtes connecté.'
-            else:
-                message = 'Identifiants invalides.'
-    return render(
-        request, 'authentication/login.html', context={'form': form, 'message': message})
-'''
+```
 
-#5 : Testez la connexion
+### 5. Testez la connexion
 
+### 6. Restreignez l’accès à la page d’accueil
 
-#6 : Restreignez l’accès à la page d’accueil
-# blog/views.py
-'''
+#### blog/views.py
+
+```python
 from django.contrib.auth.decorators import login_required
-
 
 @login_required
 def home(request):
-    return render(request, blog/home.html')
+    return render(request, 'blog/home.html')
+```
 
-# fotoblog/settings.py
+#### fotoblog/settings.py
 
+```python
 LOGIN_URL = 'login'
-'''
+```
 
-### Etape 5  : Créez une page de connexion avec des vues basées sur des classes
+## Etape 5: Créez une page de connexion avec des vues basées sur des classes
 
-'''
+```python
 from django.views.generic import View
 class LoginPageView(View):
-    template_name = 'authentication/login.html'
-    form_class = forms.LoginForm
+```
 
-    def get(self, request):
-        form = self.form_class()
-        message = ''
-        return render(request, self.template_name, context={'form': form, 'message': message})
-        
-    def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            user = authenticate(
-                username=form.cleaned_data['username'],
-                password=form.cleaned_data['password'],
-            )
-            if user is not None:
-                login(request, user)
-                return redirect('home')
-        message = 'Identifiants invalides.'
-        return render(request, self.template_name, context={'form': form, 'message': message})
-'''
+### Paramètres
 
+#### fotoblog/urls.py
 
-# fotoblog/urls.py
-'''
+```python
 urlpatterns = [
     ...
     path('', authentication.views.LoginPageView.as_view(), name='login'),
     ...
 ]
-'''
+```
 
-#  ---Implémentez la connexion avec des vues génériques---
+### Implémentez la connexion avec des vues génériques
 
-#1- : Configurez les paramètres
-# fotoblog/settings.py
-'''
+#### fotoblog/settings.py
+
+```python
 LOGIN_REDIRECT_URL = 'home'
-'''
+```
 
-# --2-Ajoutez le modèle d’URL et la configuration de la vue--
-# authentication/urls.py
-'''
+### Ajoutez le modèle d’URL et la configuration de la vue
+
+#### authentication/urls.py
+
+```python
 from django.contrib.auth.views import LoginView
     
 urlpatterns = [
@@ -495,16 +468,15 @@ urlpatterns = [
         name='login'),
     path('logout/', authentication.views.logout_user, name='logout'),
 ]
-'''
+```
 
-## Etape 6 : Ajoutez une page d’inscription
+## Etape 6: Ajoutez une page d’inscription
 
+### 1. Spécialisez UserCreationForm
 
-#  --1 : Spécialisez UserCreationForm--
+#### authentication/forms.py
 
-# authentication/forms.py
-
-'''
+```python
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
@@ -512,30 +484,26 @@ class SignupForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
         fields = ('username', 'email', 'first_name', 'last_name', 'role')
-'''
+```
 
-#2 : Ajoutez une vue d’inscription
-# authentication/views.py
-'''
+### 2. Ajoutez une vue d’inscription
+
+#### authentication/views.py
+
+```python
 from django.conf import settings
 from django.contrib.auth import login
 from django.shortcuts import redirect, render
 from . import forms
 
 def signup_page(request):
-    form = forms.SignupForm()
-    if request.method == 'POST':
-        form = forms.SignupForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            # auto-login user
-            login(request, user)
-            return redirect(settings.LOGIN_REDIRECT_URL)
-return render(request, 'authentication/signup.html', context={'form': form})
-'''
-#3 : Configurez les gabarits
-# authentication/templates/authentication/signup.html
-'''
+```
+
+### 3. Configurez les gabarits
+
+#### authentication/templates/authentication/signup.html
+
+```html
 {% extends 'base.html' %}
 {% block content %}
     <h2>Inscription</h2>
@@ -548,10 +516,11 @@ return render(request, 'authentication/signup.html', context={'form': form})
         <button type="submit" >S’inscrire</button>
     </form>
 {% endblock content %}
-'''
+```
 
-# authentication/templates/authentication/login.html
-'''
+#### authentication/templates/authentication/login.html
+
+```html
 {% extends 'base.html' %}
 {% block content %}
     <form method="post">
@@ -561,24 +530,26 @@ return render(request, 'authentication/signup.html', context={'form': form})
     </form>
     <p>Pas encore membre ? <a href="{% url 'signup' %}">Inscrivez-vous maintenant !</a></p>
 {% endblock content %}
-'''
+```
 
-#4 : Ajoutez le modèle d’URL
-# fotoblog/urls.py
-'''
+### 4. Ajoutez le modèle d’URL
+
+#### fotoblog/urls.py
+
+```python
 urlpatterns = [
     ...
     path('signup/', authentication.views.signup_page, name='signup'),
 ]
-'''
+```
 
-## Etape 7 : Personnalisez la validation de mot de passe
+## Etape 7: Personnalisez la validation de mot de passe
 
-#---1 : Créez les validateurs----
-# créez un nouveau fichier nommé   validators.py 
+### 1. Créez les validateurs
 
-# authentication/validators.py
-'''
+#### authentication/validators.py
+
+```python
 from django.core.exceptions import ValidationError
 
 class ContainsLetterValidator:
@@ -589,12 +560,13 @@ class ContainsLetterValidator:
                 
     def get_help_text(self):
         return 'Votre mot de passe doit contenir au moins une lettre majuscule ou minuscule.'
-'''
+```
 
-#  2 : Configurez les paramètres pour utiliser le validateur personnalisé
+### 2. Configurez les paramètres pour utiliser le validateur personnalisé
 
-'''
-# fotoblog/settings.py  
+#### fotoblog/settings.py
+
+```python
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
@@ -606,6 +578,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'authentication.validators.ContainsLetterValidator',
     },
 ]
+```
+
 
 # fotoblog/settings.py  | configuration initial django sur les mots de passe
  {
@@ -620,6 +594,25 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+'''
+
+
+# fotoblog/settings.py  | configuration initial django sur les mots de passe
+'''
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
 '''
 
 ## Etape 8 : Créez un service de mise en ligne des images
@@ -648,7 +641,7 @@ class Blog(models.Model):
 
 '''
 
-# ajout de 
+# ajout de photo
 #Gestion de telechargement des photo
 #blog/views.py
 ''' 
@@ -663,9 +656,7 @@ def photo_upload(request):
         return redirect('home')
     return render(request,'blog/photo_upload.html', context={'form':form})
 
-
-@login_required
-                  
+@login_required          
 def home(request):
     photos=models.Photo.objects.all()
     return render(request, 'blog/home.html', context={'photo': photos})
@@ -687,8 +678,6 @@ def home(request):
 '''
 
 # ajout du chemin dans urls
-
-
 ### Générons et exécutons les migrations ###
 """ 
 (ENV) ~/fotoblog (master)
@@ -699,7 +688,7 @@ def home(request):
 
 ## Etape 9: Mettez en ligne des images avec un formulaire
 
-# -- 1 : Configurezsettings.py--
+###1 : Configurez settings.py --
 
 # fotoblog/settings.py
 '''
@@ -707,7 +696,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR.joinpath('media/')
 '''
 
-#----2 : Ajoutez les médias aux modèles d’URL---
+### 2 : Ajoutez les médias aux modèles d’URL---
 
 # fotoblog/urls.py
 '''
@@ -723,34 +712,32 @@ if settings.DEBUG:
 
 '''
 
-#Attention
+# ##Attention
 '''
 Cette méthode n’est adaptée que dans un environnement de développement. Sur un site en production, paramétrez  settings.DEBUGsurFalseet implémentez un processus de stockage des médias plus sophistiqué. Habituellement, cela implique de configurer le serveur web pour qu’il serve le média directement, ou qu’il mette en ligne le média à un fournisseur de stockage tiers.
 '''
 
-#3 : Créez un formulaire capable de gérer les mises en ligne d’images
 
-# blog/forms.py
+### 3 : Créez un formulaire capable de gérer les mises en ligne d’images
+
+## blog/forms.py
 '''
 from django import forms
 
 from . import models
-
 class PhotoForm(forms.ModelForm):
     class Meta:
         model = models.Photo
         fields = ['image', 'caption']
 '''
 
-# 4 : Construisez la vue pour qu’elle gère les téléversements d’images
+### 4 : Construisez la vue pour qu’elle gère les téléversements d’images
 
-# blog/views.py
+## blog/views.py
 
 '''
 from django.shortcuts import redirect, render
-
 from . import forms
-
 @login_required
 def photo_upload(request):
     form = forms.PhotoForm()
@@ -766,9 +753,9 @@ def photo_upload(request):
     return render(request, 'blog/photo_upload.html', context={'form': form})
 '''
 
-#5 : Ajoutez le gabarit
+### 5 : Ajoutez le gabarit
 
-# blog/templates/blog/photo_upload.html
+## blog/templates/blog/photo_upload.html
 '''
 {% extends 'base.html' %}
 {% block content %}
@@ -779,13 +766,12 @@ def photo_upload(request):
         <button type="submit" >Publier</button>
     </form>
 {% endblock content %}
-
 '''
 
-#6 : Mettez à jour les modèles d’URL
+### 6 : Mettez à jour les modèles d’URL
 
 '''
-# fotoblog/urls.py
+## fotoblog/urls.py
 import blog.views
 
 urlpatterns = [
@@ -799,17 +785,15 @@ urlpatterns = [
 '''
 # blog/views.py
 from . import models
-
 @login_required
 def home(request):
     photos = models.Photo.objects.all()
     return render(request, 'blog/home.html', context={'photos': photos})
 '''
 
-# 
-# blog/templates/blog/home.html
+## blog/templates/blog/home.html
 '''
-# blog/templates/blog/home.html
+## blog/templates/blog/home.html
 {% extends 'base.html' %}
 {% block content %}
     <h2>Photos</h2>
@@ -819,12 +803,11 @@ def home(request):
     {% endfor %}
 {% endblock content %}
 '''
-#
+
 '''path('photo/upload/', blog.views.photo_upload, name='photo_upload'),
 '''
 
-
-# Edit profile
+### Edit profile
 '''
 #base.html
 {% load static %}
@@ -853,43 +836,22 @@ def home(request):
 </html>
 '''
 
-
 '''
-
-
 def (request):
     photos=models.Photo.objects.all()
     return render(request, 'blog/home.html', context={'photo': photos})
-    
-
-
-
-    '''
-
-
-
-
-
-
-
-
+'''
 
 #sources : Documentation
 #https://docs.djangoproject.com/fr/3.2/howto/static-files/  (fichier static)
 #https://docs.djangoproject.com/en/5.0/topics/forms/  (formulaire)
 
 
-
-
-
 '''
 
-
-# blog/models.py
+### blog/models.py
 from django.conf import settings
 from django.db import models
-
-
 class Photo(models.Model):
     image = models.ImageField()
     caption = models.CharField(max_length=128, blank=True)
@@ -904,18 +866,17 @@ class Blog(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     starred = models.BooleanField(default=False)
 
-
     '''
 
 ### Créez plusieurs modèles avec un seul formulaire
 
-#1 : Créez les formulaires
+## 1 : Créez les formulaires
 '''
 Pour permettre aux utilisateurs d’instancier plusieurs modèles simultanément, il vous faut un formulaire pour chacun des modèles  Photo  et  Blog
 '''
 
 '''
-# blog/forms.py
+## blog/forms.py
 from django import forms
 
 from . import models
@@ -924,14 +885,11 @@ from . import models
 class PhotoForm(forms.ModelForm):
     ...
 
-
 class BlogForm(forms.ModelForm):
     class Meta:
         model = models.Blog
         fields = ['title', 'content']
 '''
-
-
 
 '''
 # blog/templates/blog/create_blog_post.html
@@ -945,7 +903,6 @@ class BlogForm(forms.ModelForm):
         <button type="submit" >Publier</button>
     </form>
 {% endblock content %}
-
 '''
 
 ##  3 : Écrivez la vue
@@ -1287,3 +1244,15 @@ urlpatterns = [
 <p><a href="{% url 'upload_profile_photo' %}">Changer la photo de profil</a></p>
 
 '''
+
+
+
+
+
+
+
+
+
+
+--- 
+
